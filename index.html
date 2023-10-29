@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="index.js" defer></script>
+    <title>Todo List</title>
+</head>
+<body>
+    <header class="header">
+        <h1>Todo List</h1>
+    </header>
+    <div class="body-container">
+        <aside class="projects-container">
+            <h2>Projects</h2>
+            <div class="test">
+                <p>Project</p>
+                <div class="icon-group">
+                    <a href="" class="expand"><img src="./icons/arrow-expand.svg" alt=""></a>
+                    <a href="" class="delete"><img src="./icons/trash-can-outline.svg" alt=""></a>
+                </div>
+            </div>
+            <div class="test">
+                <p>Project</p>
+                <div class="icon-group">
+                    <a href="" class="expand"><img src="./icons/arrow-expand.svg" alt=""></a>
+                    <a href="" class="delete"><img src="./icons/trash-can-outline.svg" alt=""></a>
+                </div>
+            </div>
+            <div class="test">
+                <p>Project</p>
+                <div class="icon-group">
+                    <a href="" class="expand"><img src="./icons/arrow-expand.svg" alt=""></a>
+                    <a href="" class="delete"><img src="./icons/trash-can-outline.svg" alt=""></a>
+                </div>
+            </div>
+        </aside>
+        <main>
+            <div class="add-todo">
+                <h2>Add Todo</h2>
+                <button>+</button>
+                <form action="" class="hidden todo-modal">
+                    <label for="todo-title">Title:</label>
+                    <input type="text" id="todo-title" name="todo-title" maxlength="25">
+                    <label for="todo-description">Description:</label>
+                    <input type="text" id="todo-description" name="todo-description">
+                    <label for="due-date">Due Date:</label>
+                    <input type="date" id="due-date" name="due-date">
+                    <label for="priority">Priority:</label>
+                    <select name="priority" id="priority">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                    <label for="project">Project:</label>
+                    <select name="project" id="project">
+                        <option value="main-list" selected>Main List</option>
+                        <option value="new-project">Add New Project</option>
+                    </select>
+                </form>
+            </div>
+            <div class="featured-list-container">
+                <h2 class="featured-list-title">Main List</h2>
+                <div class="featured-list-items">
+                    <div class="test todo-item">
+                        <p>Test Todo</p>
+                        <div class="icon-group">
+                            <a href="" class="expand"><img src="./icons/arrow-expand.svg" alt=""></a>
+                            <a href="" class="delete"><img src="./icons/trash-can-outline.svg" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="test todo-item">
+                        <p>Test Todo</p>
+                        <div class="icon-group">
+                            <a href="" class="expand"><img src="./icons/arrow-expand.svg" alt=""></a>
+                            <a href="" class="delete"><img src="./icons/trash-can-outline.svg" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="test todo-item">
+                        <p>Test Todo</p>
+                        <div class="icon-group">
+                            <a href="" class="expand"><img src="./icons/arrow-expand.svg" alt=""></a>
+                            <a href="" class="delete"><img src="./icons/trash-can-outline.svg" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="test todo-item">
+                        <p>Test Todo</p>
+                        <div class="icon-group">
+                            <a href="" class="expand"><img src="./icons/arrow-expand.svg" alt=""></a>
+                            <a href="" class="delete"><img src="./icons/trash-can-outline.svg" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="test todo-item">
+                        <p>Test Todo</p>
+                        <div class="icon-group">
+                            <a href="" class="expand"><img src="./icons/arrow-expand.svg" alt=""></a>
+                            <a href="" class="delete"><img src="./icons/trash-can-outline.svg" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="test todo-item">
+                        <p>Test Todo</p>
+                        <div class="icon-group">
+                            <a href="" class="expand"><img src="./icons/arrow-expand.svg" alt=""></a>
+                            <a href="" class="delete"><img src="./icons/trash-can-outline.svg" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
