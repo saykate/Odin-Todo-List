@@ -9,6 +9,18 @@ const pTitle = document.querySelector('#project-title');
 const pDescription = document.querySelector('#project-description');
 const pForm = document.querySelector('.project-modal');
 const pContainer = document.querySelector('.projects-container');
+const projectModal = document.querySelector('.project-modal');
+const projectButton = document.querySelector('.project-button');
+const projectSubmit = document.querySelector('.project-submit');
+const todoModal = document.querySelector('.todo-modal');
+const todoButton = document.querySelector('.todo-button');
+const todoSubmit = document.querySelector('.todo-submit');
+
+projectButton.addEventListener('click', () => projectModal.classList.remove('hidden'));
+projectSubmit.addEventListener('click', () => projectModal.classList.add('hidden'));
+todoButton.addEventListener('click', () => todoModal.classList.remove('hidden'));
+todoSubmit.addEventListener('click', () => todoModal.classList.add('hidden'));
+
 
 function TodoItem(title, description, date, priority, project) {
     this.title = title;

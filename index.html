@@ -10,92 +10,80 @@
     <title>Todo List</title>
 </head>
 <body>
-    <header class="header">
-        <h1>Todo List</h1>
-    </header>
-    <div class="body-container">
-        <aside class="projects-container">
-            <h2>Projects</h2>
-            <div class="add-button">
-                <h3>Add Project</h3>
-                <button>+</button>
-            </div>
-            <form action="" class="hidden modal project-modal">
-                <label for="project-title">Title:</label>
-                <input type="text" id="project-title" name="project-title" maxlength="25">
-                <label for="project-description">Description:</label>
-                <input type="text" id="project-description" name="project-description">
-                <button type="submit" class="submit">Add it!</button>
-            </form>
-            <div class="test project-item">
-                <p>Project</p>
-                <div class="icon-group">
-                    <a href="" class="expand"><img src="./icons/arrow-expand.svg" alt=""></a>
-                    <a href="" class="delete"><img src="./icons/trash-can-outline.svg" alt=""></a>
-                </div>
-            </div>
-            <div class="test project-item">
-                <p>Project</p>
-                <div class="icon-group">
-                    <a href="" class="expand"><img src="./icons/arrow-expand.svg" alt=""></a>
-                    <a href="" class="delete"><img src="./icons/trash-can-outline.svg" alt=""></a>
-                </div>
-            </div>
-        </aside>
-        <main>
-            <div class="add-todo">
+    <form action="" class="hidden modal project-modal">
+        <label for="project-title">Title:</label>
+        <input type="text" id="project-title" name="project-title" maxlength="25">
+        <label for="project-description">Description:</label>
+        <input type="text" id="project-description" name="project-description">
+        <button type="submit" class="project-submit">Add it!</button>
+    </form>
+    <form action="" class="hidden modal todo-modal">
+        <label for="todo-title">Title:</label>
+        <input type="text" id="todo-title" name="todo-title" maxlength="25">
+        <label for="todo-description">Description:</label>
+        <input type="text" id="todo-description" name="todo-description">
+        <label for="due-date">Due Date:</label>
+        <input type="date" id="due-date" name="due-date">
+        <label for="priority">Priority:</label>
+        <select name="priority" id="priority">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+        <label for="project">Project:</label>
+        <select name="project" id="project">
+            <option value="main-list" selected>Main List</option>
+            <option value="new-project">Add New Project</option>
+        </select>
+        <button type="submit" class="todo-submit">Add it!</button>
+    </form>
+    <div class="overlay">
+        <header class="header">
+            <h1>Todo List</h1>
+        </header>
+        <div class="body-container">
+            <aside class="projects-container">
+                <h2>Projects</h2>
                 <div class="add-button">
-                    <h2>Add Todo</h2>
-                    <button>+</button>
+                    <h3>Add Project</h3>
+                    <button class="project-button">+</button>
                 </div>
-                <form action="" class="hidden modal todo-modal">
-                    <label for="todo-title">Title:</label>
-                    <input type="text" id="todo-title" name="todo-title" maxlength="25">
-                    <label for="todo-description">Description:</label>
-                    <input type="text" id="todo-description" name="todo-description">
-                    <label for="due-date">Due Date:</label>
-                    <input type="date" id="due-date" name="due-date">
-                    <label for="priority">Priority:</label>
-                    <select name="priority" id="priority">
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>
-                        <option value="high">High</option>
-                    </select>
-                    <label for="project">Project:</label>
-                    <select name="project" id="project">
-                        <option value="main-list" selected>Main List</option>
-                        <option value="new-project">Add New Project</option>
-                    </select>
-                    <button type="submit" class="submit">Add it!</button>
-                </form>
-            </div>
-            <div class="featured-list-container">
-                <h2 class="featured-list-title">Main List</h2>
-                <div class="featured-list-items">
-                    <div class="test todo-item">
-                        <p>Test Todo</p>
-                        <div class="icon-group">
-                            <a href="" class="expand"><img src="./icons/arrow-expand.svg" alt=""></a>
-                            <a href="" class="delete"><img src="./icons/trash-can-outline.svg" alt=""></a>
-                        </div>
+                
+                <div class="test project-item">
+                    <p>Project</p>
+                    <div class="icon-group">
+                        <a href="" class="expand"><img src="./icons/arrow-expand.svg" alt=""></a>
+                        <a href="" class="delete"><img src="./icons/trash-can-outline.svg" alt=""></a>
                     </div>
-                    <div class="test todo-item">
-                        <p>Test Todo</p>
-                        <div class="icon-group">
-                            <a href="" class="expand"><img src="./icons/arrow-expand.svg" alt=""></a>
-                            <a href="" class="delete"><img src="./icons/trash-can-outline.svg" alt=""></a>
-                        </div>
+                </div>
+            </aside>
+            <main>
+                <div class="add-todo">
+                    <div class="add-button">
+                        <h2>Add Todo</h2>
+                        <button class="todo-button">+</button>
                     </div>
-                    <div class="test todo-item">
-                        <p>Test Todo</p>
-                        <div class="icon-group">
-                            <a href="" class="expand"><img src="./icons/arrow-expand.svg" alt=""></a>
-                            <a href="" class="delete"><img src="./icons/trash-can-outline.svg" alt=""></a>
+                </div>
+                <div class="featured-list-container">
+                    <h2 class="featured-list-title">Main List</h2>
+                    <div class="featured-list-items">
+                        <div class="test todo-item">
+                            <p>Test Todo</p>
+                            <div class="icon-group">
+                                <a href="" class="expand"><img src="./icons/arrow-expand.svg" alt=""></a>
+                                <a href="" class="delete"><img src="./icons/trash-can-outline.svg" alt=""></a>
+                            </div>
+                            <div class="hidden modal details-modal">
+                               <h3>Title:</h3>
+                               <p>Description:</p>
+                               <p>Due Date:</p>
+                               <p>Priority:</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </main>
+            </main>
+        </div>
     </div>
 </body>
 </html>
