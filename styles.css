@@ -6,6 +6,8 @@
 
 body {
     max-width: 1200px;
+    height: 100vh;
+    background-color: rgb(163, 226, 205);
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -45,6 +47,7 @@ h2 {
 button {
     background-color: rgb(163, 226, 205);
     border: 1px solid rgb(113, 113, 162);
+    max-width: 20%;
 }
 
 .icon-group {
@@ -88,6 +91,7 @@ main {
     right: 10%;
     top: 20%;
     background-color: rgb(131, 116, 116);
+    color: blanchedalmond;
     border: 3px solid rgb(71, 71, 92);
     border-radius: var(--border-radius);
     z-index: 2;
@@ -113,6 +117,10 @@ main {
     backdrop-filter: blur(3px);
     z-index: 1;
 }
+
+.error {
+    border: 1px solid red;
+  }
 
 .featured-list-container {
     width: 100%;

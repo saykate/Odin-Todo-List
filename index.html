@@ -12,32 +12,32 @@
 <body>
     <form action="" class="hidden modal project-modal">
         <label for="project-title">Title:</label>
-        <input type="text" id="project-title" name="project-title" maxlength="25">
+        <input type="text" class="input" id="project-title" name="project-title" maxlength="25">
         <label for="project-description">Description:</label>
-        <input type="text" id="project-description" name="project-description">
+        <textarea class="input" type="text" id="project-description" name="project-description" cols="30" rows="4"></textarea>
         <button type="submit" class="project-submit">Add it!</button>
     </form>
     <form action="" class="hidden modal todo-modal">
         <label for="todo-title">Title:</label>
-        <input type="text" id="todo-title" name="todo-title" maxlength="25">
+        <input type="text" class="input" id="todo-title" name="todo-title" maxlength="25">
         <label for="todo-description">Description:</label>
-        <input type="text" id="todo-description" name="todo-description">
+        <textarea class="input" type="text" id="todo-description" name="todo-description" cols="30" rows="4"></textarea>
         <label for="due-date">Due Date:</label>
-        <input type="date" id="due-date" name="due-date">
+        <input type="date" class="input" id="due-date" name="due-date">
         <label for="priority">Priority:</label>
-        <select name="priority" id="priority">
+        <select name="priority" class="input" id="priority">
             <option value="low">Low</option>
             <option value="medium">Medium</option>
             <option value="high">High</option>
         </select>
         <label for="project">Project:</label>
-        <select name="project" id="project">
+        <select name="project" class="input" id="project">
             <option value="main-list" selected>Main List</option>
             <option value="new-project">Add New Project</option>
         </select>
         <button type="submit" class="todo-submit">Add it!</button>
     </form>
-    <div class="overlay">
+    <div class="overlay hidden"></div>
         <header class="header">
             <h1>Todo List</h1>
         </header>
@@ -78,12 +78,26 @@
                                <p>Description:</p>
                                <p>Due Date:</p>
                                <p>Priority:</p>
+                               <button class="close-button">Close</button>
+                            </div>
+                        </div>
+                        <div class="test todo-item">
+                            <p>Test Todo</p>
+                            <div class="icon-group">
+                                <a href="" class="expand"><img src="./icons/arrow-expand.svg" alt=""></a>
+                                <a href="" class="delete"><img src="./icons/trash-can-outline.svg" alt=""></a>
+                            </div>
+                            <div class="hidden modal details-modal">
+                               <h3>Title:</h3>
+                               <p>Description:</p>
+                               <p>Due Date:</p>
+                               <p>Priority:</p>
+                               <button class="close-button">Close</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </main>
         </div>
-    </div>
 </body>
 </html>
