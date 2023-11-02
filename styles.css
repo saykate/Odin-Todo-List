@@ -129,7 +129,7 @@ form {
     border: 1px solid red;
   }
 
-.featured-list-container {
+.main-list-container {
     width: 100%;
     background-color: rgb(113, 113, 162);
     padding: var(--padding-one);

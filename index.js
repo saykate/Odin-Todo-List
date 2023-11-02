@@ -4,15 +4,14 @@ const todoButton = document.querySelector('.todo-button');
 const projectButton = document.querySelector('.project-button');
 const overlay = document.querySelector('.overlay')
 const deleteButton = document.querySelectorAll('.delete');
-const modal = document.createElement('div');
 
+const modal = document.createElement('div');
 const openModal = (content) => {
     modal.classList.add('modal');
     body.appendChild(modal);
     overlay.classList.remove('hidden');
     modal.appendChild(content);
 }
-
 const closeModal = () => {
     body.removeChild(modal);
     overlay.classList.add('hidden');
@@ -28,7 +27,6 @@ const mockTodos = [
         project: 'main'
     }
 ]
-
 const mockProject = [
     {
         title: 'this project', 
@@ -36,28 +34,14 @@ const mockProject = [
     }
 ]
 
-//Check input fields for empty fields
-const checkFields = () => {
-    const inputs = document.querySelectorAll('.input');
-
-    inputs.forEach(input => {
-        if (input.value === '') {
-            input.classList.add('error')
-        } else {
-            input.classList.remove('error');
-        }
-    })
-}
-
 function TodoItem(_title, _description, _date, _priority, _project) {
 
-    const listItem = document.querySelector('.featured-list-items');
+    const listItem = document.querySelector('.main-list-items');
     const title = _title;
     const description = _description;
     const date = _date; 
     const priority = _priority;
     const project = _project;
-    let todoDetails; 
 
    const init = () => {
     const todoElement = document.createElement('div');
@@ -68,11 +52,11 @@ function TodoItem(_title, _description, _date, _priority, _project) {
             <button class="expand"><img src="./icons/arrow-expand.svg" alt=""></button>
             <button class="delete"><img src="./icons/trash-can-outline.svg" alt=""></button>
         </div>`
-    todoDetails = document.createElement('div');
+    const todoDetails = document.createElement('div');
     todoDetails.classList.add('hidden');
     todoDetails.innerHTML = `
         <h3>Title: ${capitalize(title)}</h3>
-        <p>Description: ${description}</p>
+        <p>Description: ${capitalizeFirstWord(description)}</p>
         <p>Due Date: ${date}</p>
         <p>Priority: ${priority}</p>
         <p>Project: ${project}</p>
@@ -95,7 +79,7 @@ function ProjectItem(_title, _description) {
         const projectElement = document.createElement('div');
         projectElement.classList.add('project-item');
         projectElement.innerHTML = `
-            <p>${capitalize(title)}</p>
+            <p class="title-for-dropdown">${capitalize(title)}</p>
             <div class="icon-group">
                 <button class="expand"><img src="./icons/arrow-expand.svg" alt=""></button>
                 <button class="delete"><img src="./icons/trash-can-outline.svg" alt=""></button>
@@ -138,7 +122,6 @@ const createProject = (event) => {
     const pDescription = document.querySelector('#project-description');
 
     const newProject = new ProjectItem(pTitle.value, pDescription.value);
-    console.log(newProject);
   
     newProject.pInit(); 
     closeModal();
@@ -163,11 +146,21 @@ const createTodoForm = () => {
         <label for="project">Project:</label>
         <select name="project" class="input" id="project">
             <option value="main-list" selected>Main List</option>
-            <option value="new-project">Add New Project</option>
         </select>
         <button type="submit" class="todo-submit">Add it!</button>`;
-
+        
         openModal(todoForm);
+
+        //get current projects for the dropdown
+        const project = document.querySelector('#project');
+        const options = document.querySelectorAll('.title-for-dropdown');
+        options.forEach(opt => {
+            const newOption = document.createElement('option');
+            newOption.value = opt.textContent;
+            newOption.textContent = opt.textContent;
+            project.appendChild(newOption);
+        })
+
         todoForm.addEventListener('submit', createTodo);
 }
 
@@ -200,6 +193,10 @@ const createExpandListener = (target, details) => {
 //Capitalize the first letter of each word
 function capitalize(string) {
     return string.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+}
+
+function capitalizeFirstWord(string) {
+   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
 mockTodos.forEach(todo => {
