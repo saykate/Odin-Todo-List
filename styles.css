@@ -34,20 +34,19 @@ h2 {
     margin-bottom: var(--gap);
 }
 
-.add-button {
+.add-container {
     display: flex;
     gap: var(--gap);
     align-items: center;
 }
 
-.projects-container .add-button {
+.projects-container .add-container {
     margin-bottom: var(--padding-one);
 }
 
 button {
     background-color: rgb(163, 226, 205);
     border: 1px solid rgb(113, 113, 162);
-    max-width: 20%;
 }
 
 .icon-group {
@@ -68,7 +67,7 @@ main {
     padding: var(--padding-one);
 }
 
-.add-todo {
+.main-container {
     width: 100%;
     display: flex;
     align-items: center;
@@ -78,14 +77,16 @@ main {
     border-radius: var(--border-radius);
 }
 
-.add-todo h2 {
+.main-container h2 {
     margin-bottom: 0;
 }
 
+.expand, .delete {
+    padding: 2px;
+}
+
 .modal {
-    display: flex;
-    flex-direction: column;
-    padding: var(--padding-one);
+    padding: 2rem;
     position: absolute;
     width: 80%;
     right: 10%;
@@ -97,8 +98,14 @@ main {
     z-index: 2;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+}
+
 .modal button {
     margin-top: var(--padding-one);
+    max-width: 40%;
 }
 
 .hidden {
