@@ -200,17 +200,18 @@ const createExpandListener = (target, details) => {
         event.preventDefault();
         openModal(details);
         details.classList.remove('hidden');
-         //change color of priority
-        const priorityElement = document.querySelector('.priority-flag');
-        if(priorityElement.textContent.includes('low')) {
-            priorityElement.style.color = 'rgb(128, 226, 156)';
-        } else if (priorityElement.textContent.includes('medium')) {
-            priorityElement.style.color = 'orange';
-        } else {
-            priorityElement.style.color = 'rgb(161, 21, 5)';
-        }
         const closeButton = document.querySelector('.close-button');
         closeButton.addEventListener('click', closeModal);
+         //change color of priority of todo items
+         const priorityElement = details.querySelector('.priority-flag');
+        if (priorityElement){
+                if(priorityElement.textContent.includes('low')) {
+                    priorityElement.style.color = 'rgb(128, 226, 156)';
+                } else if (priorityElement.textContent.includes('medium')) {
+                    priorityElement.style.color = 'orange';
+                } else {
+                    priorityElement.style.color = 'rgb(161, 21, 5)';
+        }} 
     });
 }
 
@@ -226,11 +227,12 @@ const createDeleteListener = (target, parent, child) => {
 const createCompleteListener = (target, parent) => {
     target.addEventListener('change', (event) => {
         event.preventDefault();
-        console.log('clicked')
         const displayTitle = parent.querySelector('.display-title');
         displayTitle.classList.toggle('strike');
     })
 }
+
+//Add projects to an object
 
 //Capitalize the first letter of each word
 function capitalize(string) {
