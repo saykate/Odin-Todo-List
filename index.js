@@ -4,6 +4,8 @@ const todoButton = document.querySelector('.todo-button');
 const projectButton = document.querySelector('.project-button');
 const overlay = document.querySelector('.overlay')
 const deleteButton = document.querySelectorAll('.delete');
+const projectList = [];
+
 
 //Modal functions
 const modal = document.createElement('div');
@@ -82,11 +84,11 @@ function TodoItem(_title, _description, _date, _priority, _project) {
 }
 
 //Create the shape and contents of a project Idem
-function ProjectItem(_title, _description) {
+function ProjectItem(_title) {
 
+    const todos = [];
     const pContainer = document.querySelector('.projects-container');
     const title = _title; 
-    const description = _description;
 
     //puts the contents from the form into the structure of new elements
     const pInit = () => {
@@ -102,7 +104,8 @@ function ProjectItem(_title, _description) {
         projectDetails.classList.add('hidden');
         projectDetails.innerHTML = `
             <h3>Title: ${capitalize(title)}</h3>
-            <p>Description: ${description}</p>
+            <h4>Todos:</h4>
+            <div class="project-todos"></div>
             <button class="close-button">Close</button>`
         pContainer.appendChild(projectElement);
         const expandTarget = projectElement.querySelector('.expand');
@@ -111,7 +114,10 @@ function ProjectItem(_title, _description) {
         createDeleteListener(deleteTarget, pContainer, projectElement);
     }
     
-        return {pInit};
+        return {
+            pInit,
+            addTodo: (todo) => todos.push(todo),
+        };
 }
 
 //On the submit button of form, this creates a new todo-item
@@ -135,9 +141,8 @@ const createProject = (event) => {
     event.preventDefault();
 
     const pTitle = document.querySelector('#project-title');
-    const pDescription = document.querySelector('#project-description');
-
-    const newProject = new ProjectItem(pTitle.value, pDescription.value);
+    const newProject = new ProjectItem(pTitle.value);
+    projectList.push(newProject)
   
     newProject.pInit(); 
     closeModal();
@@ -255,6 +260,3 @@ mockProject.forEach(project => {
 
 todoButton.addEventListener('click', createTodoForm);
 projectButton.addEventListener('click', createProjectForm);
-
-
-
