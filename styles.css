@@ -49,6 +49,15 @@ button {
     border: 1px solid rgb(113, 113, 162);
 }
 
+.checked {
+    display: flex;
+    gap: var(--gap);
+}
+
+.strike {
+    text-decoration: line-through;
+}
+
 .icon-group {
     display: flex;
     gap: var(--gap);

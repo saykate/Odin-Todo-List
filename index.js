@@ -51,7 +51,10 @@ function TodoItem(_title, _description, _date, _priority, _project) {
     const todoElement = document.createElement('div');
     todoElement.classList.add('todo-item');
     todoElement.innerHTML = `
-        <p>${capitalize(title)}</p>
+        <div class="checked">
+            <input type="checkbox" class="complete">
+            <p class="display-title">${capitalize(title)}</p>
+        </div>
         <div class="icon-group">
             <button class="expand"><img src="./icons/arrow-expand.svg" alt=""></button>
             <button class="delete"><img src="./icons/trash-can-outline.svg" alt=""></button>
@@ -62,20 +65,17 @@ function TodoItem(_title, _description, _date, _priority, _project) {
         <h3>Title: ${capitalize(title)}</h3>
         <p>Description: ${capitalizeFirstWord(description)}</p>
         <p>Due Date: ${date}</p>
-        <p>Priority: ${priority}</p>
+        <p>Priority: <span class="priority-flag">${priority}</span></p>
         <p>Project: ${project}</p>
         <button class="close-button">Close</button>`;
-
-        //change color of priority
-        if(priority.value === 'low') {
-            priority.style.color = 'green';
-        }
 
     listItem.appendChild(todoElement);
     const expandTarget = todoElement.querySelector('.expand');
     createExpandListener(expandTarget, todoDetails);
     const deleteTarget = todoElement.querySelector('.delete');
     createDeleteListener(deleteTarget, listItem, todoElement);
+    const completeTarget = todoElement.querySelector('.complete');
+    createCompleteListener(completeTarget, todoElement);
 }
 
     return { init };
@@ -200,7 +200,15 @@ const createExpandListener = (target, details) => {
         event.preventDefault();
         openModal(details);
         details.classList.remove('hidden');
-        
+         //change color of priority
+        const priorityElement = document.querySelector('.priority-flag');
+        if(priorityElement.textContent.includes('low')) {
+            priorityElement.style.color = 'rgb(128, 226, 156)';
+        } else if (priorityElement.textContent.includes('medium')) {
+            priorityElement.style.color = 'orange';
+        } else {
+            priorityElement.style.color = 'rgb(161, 21, 5)';
+        }
         const closeButton = document.querySelector('.close-button');
         closeButton.addEventListener('click', closeModal);
     });
@@ -211,6 +219,16 @@ const createDeleteListener = (target, parent, child) => {
     target.addEventListener('click', (event) => {
         event.preventDefault();
         parent.removeChild(child)
+    })
+}
+
+//Listen for completed checkbox and crossout item
+const createCompleteListener = (target, parent) => {
+    target.addEventListener('change', (event) => {
+        event.preventDefault();
+        console.log('clicked')
+        const displayTitle = parent.querySelector('.display-title');
+        displayTitle.classList.toggle('strike');
     })
 }
 
