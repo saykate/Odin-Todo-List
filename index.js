@@ -5,6 +5,7 @@ const projectButton = document.querySelector('.project-button');
 const overlay = document.querySelector('.overlay')
 const deleteButton = document.querySelectorAll('.delete');
 
+//Modal functions
 const modal = document.createElement('div');
 const openModal = (content) => {
     modal.classList.add('modal');
@@ -18,6 +19,7 @@ const closeModal = () => {
     modal.innerHTML = "";
 }
 
+//Temporary Items
 const mockTodos = [
     {
         title: 'this todo', 
@@ -34,6 +36,7 @@ const mockProject = [
     }
 ]
 
+//Create the shape and contents of a todo Idem
 function TodoItem(_title, _description, _date, _priority, _project) {
 
     const listItem = document.querySelector('.main-list-items');
@@ -43,6 +46,7 @@ function TodoItem(_title, _description, _date, _priority, _project) {
     const priority = _priority;
     const project = _project;
 
+    //puts the contents from the form into the structure of new elements
    const init = () => {
     const todoElement = document.createElement('div');
     todoElement.classList.add('todo-item');
@@ -60,21 +64,31 @@ function TodoItem(_title, _description, _date, _priority, _project) {
         <p>Due Date: ${date}</p>
         <p>Priority: ${priority}</p>
         <p>Project: ${project}</p>
-        <button class="close-button">Close</button>`
+        <button class="close-button">Close</button>`;
+
+        //change color of priority
+        if(priority.value === 'low') {
+            priority.style.color = 'green';
+        }
+
     listItem.appendChild(todoElement);
     const expandTarget = todoElement.querySelector('.expand');
     createExpandListener(expandTarget, todoDetails);
+    const deleteTarget = todoElement.querySelector('.delete');
+    createDeleteListener(deleteTarget, listItem, todoElement);
 }
 
     return { init };
 }
 
+//Create the shape and contents of a project Idem
 function ProjectItem(_title, _description) {
 
     const pContainer = document.querySelector('.projects-container');
     const title = _title; 
     const description = _description;
 
+    //puts the contents from the form into the structure of new elements
     const pInit = () => {
         const projectElement = document.createElement('div');
         projectElement.classList.add('project-item');
@@ -93,6 +107,8 @@ function ProjectItem(_title, _description) {
         pContainer.appendChild(projectElement);
         const expandTarget = projectElement.querySelector('.expand');
         createExpandListener(expandTarget, projectDetails);
+        const deleteTarget = projectElement.querySelector('.delete');
+        createDeleteListener(deleteTarget, pContainer, projectElement);
     }
     
         return {pInit};
@@ -178,7 +194,7 @@ const createProjectForm = () => {
     projectForm.addEventListener('submit', createProject);
 }
 
-//Listen for click on the expand button and render modal with the details
+//Listen for expand button and render modal with the details of that todo item or project
 const createExpandListener = (target, details) => {
     target.addEventListener('click', (event) => {
         event.preventDefault();
@@ -190,15 +206,24 @@ const createExpandListener = (target, details) => {
     });
 }
 
+//Listen for delete button and remove the target item or project
+const createDeleteListener = (target, parent, child) => {
+    target.addEventListener('click', (event) => {
+        event.preventDefault();
+        parent.removeChild(child)
+    })
+}
+
 //Capitalize the first letter of each word
 function capitalize(string) {
     return string.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 }
-
+//Capitalize the first letter of the first word
 function capitalizeFirstWord(string) {
    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
+//render the temporary fake items
 mockTodos.forEach(todo => {
     const newTodo = new TodoItem(todo.title, todo.description, todo.date, todo.priority, todo.project);
     newTodo.init();
