@@ -138,6 +138,18 @@ form {
     border: 1px solid red;
   }
 
+.low {
+    color: rgb(128, 226, 156);
+}
+
+.medium {
+    color: orange;
+    }
+
+.high {
+    color: rgb(161, 21, 5);
+    }
+
 .main-list-container {
     width: 100%;
     background-color: rgb(113, 113, 162);

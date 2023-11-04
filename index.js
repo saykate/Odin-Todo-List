@@ -6,7 +6,6 @@ const overlay = document.querySelector('.overlay')
 const deleteButton = document.querySelectorAll('.delete');
 const projectList = [];
 
-
 //Modal functions
 const modal = document.createElement('div');
 const openModal = (content) => {
@@ -21,55 +20,39 @@ const closeModal = () => {
     modal.innerHTML = "";
 }
 
-//Temporary Items
-const mockTodos = [
-    {
-        title: 'this todo', 
-        description: 'this description',
-        date: '10/23/2023',
-        priority: 'low',
-        project: 'main'
-    }
-]
-const mockProject = [
-    {
-        title: 'this project', 
-        description: 'this description',
-    }
-]
-
 //Create the shape and contents of a todo Idem
-function TodoItem(_title, _description, _date, _priority, _project) {
+function TodoItem(_title, _description, _date, _priority, _projectTitle, _projectId) {
 
     const listItem = document.querySelector('.main-list-items');
     const title = _title;
     const description = _description;
     const date = _date; 
     const priority = _priority;
-    const project = _project;
+    const projectTitle = _projectTitle;
+    const projectId = _projectId;
 
     //puts the contents from the form into the structure of new elements
-   const init = () => {
-    const todoElement = document.createElement('div');
-    todoElement.classList.add('todo-item');
-    todoElement.innerHTML = `
-        <div class="checked">
-            <input type="checkbox" class="complete">
-            <p class="display-title">${capitalize(title)}</p>
-        </div>
-        <div class="icon-group">
-            <button class="expand"><img src="./icons/arrow-expand.svg" alt=""></button>
-            <button class="delete"><img src="./icons/trash-can-outline.svg" alt=""></button>
-        </div>`
-    const todoDetails = document.createElement('div');
-    todoDetails.classList.add('hidden');
-    todoDetails.innerHTML = `
-        <h3>Title: ${capitalize(title)}</h3>
-        <p>Description: ${capitalizeFirstWord(description)}</p>
-        <p>Due Date: ${date}</p>
-        <p>Priority: <span class="priority-flag">${priority}</span></p>
-        <p>Project: ${project}</p>
-        <button class="close-button">Close</button>`;
+    const init = () => {
+        const todoElement = document.createElement('div');
+        todoElement.classList.add('todo-item');
+        todoElement.innerHTML = `
+            <div class="checked">
+                <input type="checkbox" class="complete">
+                <p class="display-title">${capitalize(title)}</p>
+            </div>
+            <div class="icon-group">
+                <button class="expand"><img src="./icons/arrow-expand.svg" alt=""></button>
+                <button class="delete"><img src="./icons/trash-can-outline.svg" alt=""></button>
+            </div>`
+        const todoDetails = document.createElement('div');
+        todoDetails.classList.add('hidden');
+        todoDetails.innerHTML = `
+            <h3>Title: ${capitalize(title)}</h3>
+            <p>Description: ${capitalizeFirstWord(description)}</p>
+            <p>Due Date: ${date}</p>
+            <p>Priority: <span class="priority-flag ${priority}">${priority}</span></p>
+            <p>Project: ${projectTitle}</p>
+            <button class="close-button">Close</button>`;
 
     listItem.appendChild(todoElement);
     const expandTarget = todoElement.querySelector('.expand');
@@ -78,47 +61,74 @@ function TodoItem(_title, _description, _date, _priority, _project) {
     createDeleteListener(deleteTarget, listItem, todoElement);
     const completeTarget = todoElement.querySelector('.complete');
     createCompleteListener(completeTarget, todoElement);
-}
 
-    return { init };
+    //add a todo to a project
+    projectList.forEach(project => {
+        if (projectId === project.projectId) {
+            project.addTodo({title});
+        }
+    })
+}
+    init();
+    return{ title };
 }
 
 //Create the shape and contents of a project Idem
-function ProjectItem(_title) {
+function ProjectItem(_title, _todos) {
 
-    const todos = [];
+    const todos = _todos || [];
     const pContainer = document.querySelector('.projects-container');
     const title = _title; 
+    const projectId = Date.now();
+
+    //Opens a model to show the todo items in the project
+    const openProjectDetails = () => {
+        const projectDetails = document.createElement('div');
+        projectDetails.innerHTML = `
+            <h3>Title: ${capitalize(title)}</h3>
+            <h4>Todos:</h4>
+            <div class="project-todos">
+                ${todos.map(todo => {
+                    return `${todo.title}`
+                })}
+            </div>
+            <button class="close-button">Close</button>`
+            openModal(projectDetails);
+            const closeButton = document.querySelector('.close-button');
+            closeButton.addEventListener('click', closeModal);
+        }
 
     //puts the contents from the form into the structure of new elements
     const pInit = () => {
         const projectElement = document.createElement('div');
         projectElement.classList.add('project-item');
         projectElement.innerHTML = `
-            <p class="title-for-dropdown">${capitalize(title)}</p>
+            <p>${capitalize(title)}</p>
             <div class="icon-group">
                 <button class="expand"><img src="./icons/arrow-expand.svg" alt=""></button>
                 <button class="delete"><img src="./icons/trash-can-outline.svg" alt=""></button>
             </div> `
-        const projectDetails = document.createElement('div');
-        projectDetails.classList.add('hidden');
-        projectDetails.innerHTML = `
-            <h3>Title: ${capitalize(title)}</h3>
-            <h4>Todos:</h4>
-            <div class="project-todos"></div>
-            <button class="close-button">Close</button>`
         pContainer.appendChild(projectElement);
-        const expandTarget = projectElement.querySelector('.expand');
-        createExpandListener(expandTarget, projectDetails);
         const deleteTarget = projectElement.querySelector('.delete');
         createDeleteListener(deleteTarget, pContainer, projectElement);
+        todos.forEach(todo => { 
+            new TodoItem(todo.title, todo.description, todo.date, todo.priority, title, projectId)})
+        const expandTarget = projectElement.querySelector('.expand');
+        expandTarget.addEventListener('click', openProjectDetails);
     }
+
+        const addTodo = (todo) => {
+            todos.push(todo)};
+
+        pInit();
     
         return {
-            pInit,
-            addTodo: (todo) => todos.push(todo),
+            projectId,
+            title,
+            todos,
+            addTodo,
         };
-}
+} 
 
 //On the submit button of form, this creates a new todo-item
 const createTodo = (event) => {
@@ -129,10 +139,8 @@ const createTodo = (event) => {
     const date = document.querySelector('#due-date'); 
     const priority = document.querySelector('#priority');
     const project = document.querySelector('#project');
+    new TodoItem(title.value, description.value, date.value, priority.value, project.textContent, parseInt(project.value));
 
-    const newTodo = new TodoItem(title.value, description.value, date.value, priority.value, project.value);
-
-    newTodo.init();
     closeModal();
 }
 
@@ -142,10 +150,9 @@ const createProject = (event) => {
 
     const pTitle = document.querySelector('#project-title');
     const newProject = new ProjectItem(pTitle.value);
-    projectList.push(newProject)
   
-    newProject.pInit(); 
     closeModal();
+    return projectList.push(newProject);
 }
 
 //open a modal with a form for a new Todo
@@ -174,11 +181,10 @@ const createTodoForm = () => {
 
         //get current projects for the dropdown
         const project = document.querySelector('#project');
-        const options = document.querySelectorAll('.title-for-dropdown');
-        options.forEach(opt => {
+        projectList.forEach(({projectId, title}) => {
             const newOption = document.createElement('option');
-            newOption.value = opt.textContent;
-            newOption.textContent = opt.textContent;
+            newOption.value = projectId;
+            newOption.textContent = title;
             project.appendChild(newOption);
         })
 
@@ -191,8 +197,6 @@ const createProjectForm = () => {
     projectForm.innerHTML = `
     <label for="project-title">Title:</label>
     <input type="text" class="input" id="project-title" name="project-title" maxlength="25">
-    <label for="project-description">Description:</label>
-    <textarea class="input" type="text" id="project-description" name="project-description" cols="30" rows="4"></textarea>
     <button type="submit" class="project-submit">Add it!</button>`;
     
     openModal(projectForm);
@@ -207,17 +211,7 @@ const createExpandListener = (target, details) => {
         details.classList.remove('hidden');
         const closeButton = document.querySelector('.close-button');
         closeButton.addEventListener('click', closeModal);
-         //change color of priority of todo items
-         const priorityElement = details.querySelector('.priority-flag');
-        if (priorityElement){
-                if(priorityElement.textContent.includes('low')) {
-                    priorityElement.style.color = 'rgb(128, 226, 156)';
-                } else if (priorityElement.textContent.includes('medium')) {
-                    priorityElement.style.color = 'orange';
-                } else {
-                    priorityElement.style.color = 'rgb(161, 21, 5)';
-        }} 
-    });
+       });
 }
 
 //Listen for delete button and remove the target item or project
@@ -237,8 +231,6 @@ const createCompleteListener = (target, parent) => {
     })
 }
 
-//Add projects to an object
-
 //Capitalize the first letter of each word
 function capitalize(string) {
     return string.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
@@ -247,16 +239,6 @@ function capitalize(string) {
 function capitalizeFirstWord(string) {
    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
-
-//render the temporary fake items
-mockTodos.forEach(todo => {
-    const newTodo = new TodoItem(todo.title, todo.description, todo.date, todo.priority, todo.project);
-    newTodo.init();
-})
-mockProject.forEach(project => {
-    const newProject = new ProjectItem(project.title, project.description);
-    newProject.pInit();
-})
 
 todoButton.addEventListener('click', createTodoForm);
 projectButton.addEventListener('click', createProjectForm);
