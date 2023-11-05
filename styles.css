@@ -63,10 +63,6 @@ button {
     gap: var(--gap);
 }
 
-.test:last-child {
-    margin-bottom: 0;
-}
-
 main {
     flex: 3;
     background-color: rgb(193, 193, 137);
@@ -112,10 +108,38 @@ form {
     flex-direction: column;
 }
 
+.form-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .modal button {
     margin-top: var(--padding-one);
     max-width: 40%;
 }
+
+.error {
+    border: 3px solid rgb(161, 21, 5);
+  }
+
+.error-mess {
+    background-color: rgb(161, 21, 5);
+    margin-top: var(--padding-one);
+    padding: 5px;
+}
+
+.low {
+    color: rgb(128, 226, 156);
+}
+
+.medium {
+    color: orange;
+    }
+
+.high {
+    color: rgb(161, 21, 5);
+    }
 
 .hidden {
     display: none;
@@ -134,22 +158,6 @@ form {
     z-index: 1;
 }
 
-.error {
-    border: 1px solid red;
-  }
-
-.low {
-    color: rgb(128, 226, 156);
-}
-
-.medium {
-    color: orange;
-    }
-
-.high {
-    color: rgb(161, 21, 5);
-    }
-
 .main-list-container {
     width: 100%;
     background-color: rgb(113, 113, 162);
@@ -157,7 +165,7 @@ form {
     border-radius: var(--border-radius);
 }
 
-.todo-item, .project-item {
+.todo-item, .project-item, .proj-todo {
     border: 1px solid black;
     border-radius: var(--border-radius);
     margin-bottom: .5rem;
@@ -168,8 +176,19 @@ form {
     align-items: center;
 }
 
+.proj-todo {
+    color: black;
+    max-width: 15rem;
+}
+
 @media (min-width: 600px) {
     .body-container {
         flex-direction: row;
+    }
+}
+
+@media (max-width: 400px) {
+    .form-buttons {
+        flex-direction: column;
     }
 }

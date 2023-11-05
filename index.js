@@ -89,7 +89,7 @@ function ProjectItem(_title, _todos) {
             <h4>Todos:</h4>
             <div class="project-todos">
                 ${todos.map(todo => {
-                    return `${todo.title}`
+                    return `<div class="proj-todo">${capitalize(todo.title)}</div>`
                 })}
             </div>
             <button class="close-button">Close</button>`
@@ -118,7 +118,8 @@ function ProjectItem(_title, _todos) {
     }
 
         const addTodo = (todo) => {
-            todos.push(todo)};
+            todos.push(todo);
+        };
 
         pInit();
     
@@ -133,12 +134,19 @@ function ProjectItem(_title, _todos) {
 //On the submit button of form, this creates a new todo-item
 const createTodo = (event) => {
     event.preventDefault();
-
+ 
     const title = document.querySelector('#todo-title');
     const description = document.querySelector('#todo-description');
     const date = document.querySelector('#due-date'); 
     const priority = document.querySelector('#priority');
     const project = document.querySelector('#project');
+
+    if (title.value === "") {
+        document.getElementById('todo-title').classList.add('error');
+        document.querySelector('.error-mess').classList.remove('hidden');
+        return
+        // console.log('no title value');
+    }
     new TodoItem(title.value, description.value, date.value, priority.value, project.textContent, parseInt(project.value));
 
     closeModal();
@@ -147,10 +155,17 @@ const createTodo = (event) => {
 //On the submit button of form, this creates a new project
 const createProject = (event) => {
     event.preventDefault();
-
     const pTitle = document.querySelector('#project-title');
-    const newProject = new ProjectItem(pTitle.value);
   
+    if (pTitle.value === "") {
+        document.getElementById('project-title').classList.add('error');
+        document.querySelector('.error-mess').classList.remove('hidden');
+        return
+    }
+
+    const newProject = new ProjectItem(pTitle.value);
+
+
     closeModal();
     return projectList.push(newProject);
 }
@@ -175,7 +190,10 @@ const createTodoForm = () => {
         <select name="project" class="input" id="project">
             <option value="main-list" selected>Main List</option>
         </select>
-        <button type="submit" class="todo-submit">Add it!</button>`;
+        <div class="form-buttons">
+            <button type="submit">Add it!</button>
+            <div class="error-mess hidden">PLEASE ADD A TITLE</div>
+        </div>`;
         
         openModal(todoForm);
 
@@ -184,7 +202,7 @@ const createTodoForm = () => {
         projectList.forEach(({projectId, title}) => {
             const newOption = document.createElement('option');
             newOption.value = projectId;
-            newOption.textContent = title;
+            newOption.textContent = capitalize(title);
             project.appendChild(newOption);
         })
 
@@ -197,7 +215,10 @@ const createProjectForm = () => {
     projectForm.innerHTML = `
     <label for="project-title">Title:</label>
     <input type="text" class="input" id="project-title" name="project-title" maxlength="25">
-    <button type="submit" class="project-submit">Add it!</button>`;
+    <div class="form-buttons">
+        <button type="submit">Add it!</button>
+        <div class="error-mess hidden">PLEASE ADD A TITLE</div>
+    </div>`;
     
     openModal(projectForm);
     projectForm.addEventListener('submit', createProject);
