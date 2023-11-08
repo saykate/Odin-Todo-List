@@ -2,12 +2,20 @@
     --border-radius: 5px;
     --gap: 10px;
     --padding-one: 1rem;
+    --clr-green: rgb(63, 115, 97);
+    --clr-purp: rgb(113, 113, 162);
+    --clr-beige: rgb(166, 166, 139);
+    --clr-lt-grn: rgb(235, 235, 173);
+    --clr-pink: rgb(218, 157, 157);
+    --clr-plum: rgb(131, 116, 116);
+    --clr-red: rgb(161, 21, 5);
+    --clr-almond: blanchedalmond;
 }
 
 body {
     max-width: 1200px;
     height: 100vh;
-    background-color: rgb(163, 226, 205);
+    background-color: var(--clr-green);
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -15,7 +23,7 @@ body {
 }
 
 header {
-    background-color: rgb(163, 226, 205);
+    background-color: var(--clr-green);
     padding: var(--padding-one);
 }
 
@@ -26,7 +34,7 @@ header {
 
 .projects-container {
     flex: 1;
-    background-color: rgb(166, 166, 139);
+    background-color: var(--clr-beige);
     padding: var(--padding-one);
 }
 
@@ -45,8 +53,9 @@ h2 {
 }
 
 button {
-    background-color: rgb(163, 226, 205);
-    border: 1px solid rgb(113, 113, 162);
+    background-color: var(--clr-green);
+    border: 1px solid black;
+    color: var(--clr-almond);
 }
 
 .checked {
@@ -65,7 +74,7 @@ button {
 
 main {
     flex: 3;
-    background-color: rgb(193, 193, 137);
+    background-color: var(--clr-lt-grn);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -77,7 +86,7 @@ main {
     display: flex;
     align-items: center;
     gap: var(--gap);
-    background-color: rgb(218, 157, 157);
+    background-color: var(--clr-pink);
     padding: var(--padding-one);
     border-radius: var(--border-radius);
 }
@@ -96,9 +105,9 @@ main {
     width: 80%;
     right: 10%;
     top: 20%;
-    background-color: rgb(131, 116, 116);
-    color: blanchedalmond;
-    border: 3px solid rgb(71, 71, 92);
+    background-color: var(--clr-plum);
+    color: var(--clr-almond);
+    border: 3px solid;
     border-radius: var(--border-radius);
     z-index: 2;
 }
@@ -120,11 +129,11 @@ form {
 }
 
 .error {
-    border: 3px solid rgb(161, 21, 5);
+    border: 3px solid var(--clr-red);
   }
 
 .error-mess {
-    background-color: rgb(161, 21, 5);
+    background-color: var(--clr-red);
     margin-top: var(--padding-one);
     padding: 5px;
 }
@@ -138,7 +147,7 @@ form {
     }
 
 .high {
-    color: rgb(161, 21, 5);
+    color: var(--clr-red);
     }
 
 .hidden {
@@ -160,7 +169,7 @@ form {
 
 .main-list-container {
     width: 100%;
-    background-color: rgb(113, 113, 162);
+    background-color: var(--clr-purp);
     padding: var(--padding-one);
     border-radius: var(--border-radius);
 }
@@ -171,7 +180,7 @@ form {
     margin-bottom: .5rem;
     padding: 5px;
     display: flex;
-    background-color: blanchedalmond;
+    background-color: var(--clr-almond);
     justify-content: space-between;
     align-items: center;
 }
