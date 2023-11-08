@@ -177,8 +177,14 @@ form {
 }
 
 .proj-todo {
+    margin-top: .5rem;
     color: black;
     max-width: 15rem;
+}
+
+.ttl {
+    margin-bottom: .5rem;
+    text-decoration: underline;
 }
 
 @media (min-width: 600px) {
