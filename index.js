@@ -104,6 +104,7 @@ function TodoItem(_title, _description, _date, _priority, _projectTitle, _projec
             </div>
             <div class="icon-group">
                 <button class="expand"><img src="./icons/arrow-expand.svg" alt=""></button>
+                <button class="edit"><img src="./icons/pencil-outline.svg" alt=""></button>
                 <button class="delete"><img src="./icons/trash-can-outline.svg" alt=""></button>
             </div>`
         const todoDetails = document.createElement('div');
@@ -261,6 +262,7 @@ const createCompleteListener = (target, parent) => {
 const createEditListener = (target) => {
     target.addEventListener('click', (event) => {
         event.preventDefault();
+        console.log('what is even happening?')
     }) 
 }
 
