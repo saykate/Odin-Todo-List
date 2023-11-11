@@ -6,7 +6,7 @@ const overlay = document.querySelector('.overlay')
 const deleteButton = document.querySelectorAll('.delete');
 const projectList = [];
 
-//Modal functions
+//*** MODAL FUNCTIONS ***
 const modal = document.createElement('div');
 const openModal = (content) => {
     modal.classList.add('modal');
@@ -18,6 +18,68 @@ const closeModal = () => {
     body.removeChild(modal);
     overlay.classList.add('hidden');
     modal.innerHTML = "";
+}
+
+//*** TODO FUNCTIONS ***
+//open a modal with a form for a new Todo
+const createTodoForm = () => {
+    const todoForm = document.createElement('form');
+    todoForm.innerHTML = `
+    <label for="todo-title">Title:</label>
+        <input type="text" class="input" id="todo-title" name="todo-title" maxlength="25">
+        <label for="todo-description">Description:</label>
+        <textarea class="input" type="text" id="todo-description" name="todo-description" cols="30" rows="4"></textarea>
+        <label for="due-date">Due Date:</label>
+        <input type="date" class="input" id="due-date" name="due-date">
+        <label for="priority">Priority:</label>
+        <select name="priority" class="input" id="priority">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+        <label for="project">Project:</label>
+        <select name="project" class="input" id="project">
+            <option value="main-list" selected>Main List</option>
+        </select>
+        <div class="form-buttons">
+            <button type="submit">Add it!</button>
+            <div class="error-mess hidden">PLEASE ADD A TITLE</div>
+        </div>`;
+        
+        openModal(todoForm);
+
+        //get current projects for the dropdown
+        const project = document.querySelector('#project');
+        projectList.forEach(({projectId, pTitle}) => {
+            const newOption = document.createElement('option');
+            newOption.value = projectId;
+            newOption.textContent = capitalize(pTitle);
+            project.appendChild(newOption);
+        })
+
+        todoForm.addEventListener('submit', createTodo);
+}
+
+//On the submit button of form, this creates a new todo-item
+const createTodo = (event) => {
+    event.preventDefault();
+ 
+    const title = document.querySelector('#todo-title');
+    const description = document.querySelector('#todo-description');
+    const date = document.querySelector('#due-date'); 
+    const priority = document.querySelector('#priority');
+    const project = document.querySelector('#project');
+    const selectedTitle = project.options[project.selectedIndex].textContent;
+
+    if (title.value === "") {
+        document.getElementById('todo-title').classList.add('error');
+        document.querySelector('.error-mess').classList.remove('hidden');
+        return
+    }
+
+    new TodoItem(title.value, description.value, date.value, priority.value, selectedTitle, parseInt(project.value));
+
+    closeModal();
 }
 
 //Create the shape and contents of a todo Idem
@@ -59,6 +121,8 @@ function TodoItem(_title, _description, _date, _priority, _projectTitle, _projec
     createExpandListener(expandTarget, todoDetails);
     const deleteTarget = todoElement.querySelector('.delete');
     createDeleteListener(deleteTarget, listItem, todoElement);
+    const editTarget = todoElement.querySelector('.edit');
+    createEditListener(editTarget);
     const completeTarget = todoElement.querySelector('.complete');
     createCompleteListener(completeTarget, todoElement);
 
@@ -73,70 +137,40 @@ function TodoItem(_title, _description, _date, _priority, _projectTitle, _projec
     return{ title };
 }
 
-//On the submit button of form, this creates a new todo-item
-const createTodo = (event) => {
-    event.preventDefault();
- 
-    const title = document.querySelector('#todo-title');
-    const description = document.querySelector('#todo-description');
-    const date = document.querySelector('#due-date'); 
-    const priority = document.querySelector('#priority');
-    const project = document.querySelector('#project');
-    const selectedTitle = project.options[project.selectedIndex].textContent;
+//*** PROJECT FUNCTIONS ***
+//open a modal with a form for a new Project 
+const createProjectForm = () => {
+    const projectForm = document.createElement('form');
+    projectForm.innerHTML = `
+    <label for="project-title">Title:</label>
+    <input type="text" class="input" id="project-title" name="project-title" maxlength="25">
+    <div class="form-buttons">
+        <button type="submit">Add it!</button>
+        <div class="error-mess hidden">PLEASE ADD A TITLE</div>
+    </div>`;
+    
+    openModal(projectForm);
+    projectForm.addEventListener('submit', createProject);
+}
 
-    if (title.value === "") {
-        document.getElementById('todo-title').classList.add('error');
+//On the submit button of form, this creates a new project
+const createProject = (event) => {
+    event.preventDefault();
+    const pTitle = document.querySelector('#project-title');
+  
+    if (pTitle.value === "") {
+        document.getElementById('project-title').classList.add('error');
         document.querySelector('.error-mess').classList.remove('hidden');
         return
-        // console.log('no title value');
     }
-    console.log("projectValue", project.value, "selectedTitle", selectedTitle);
 
-    new TodoItem(title.value, description.value, date.value, priority.value, selectedTitle, parseInt(project.value));
+    const newProject = new ProjectItem(pTitle.value);
 
     closeModal();
+    return projectList.push(newProject);
 }
 
-//open a modal with a form for a new Todo
-const createTodoForm = () => {
-    const todoForm = document.createElement('form');
-    todoForm.innerHTML = `
-    <label for="todo-title">Title:</label>
-        <input type="text" class="input" id="todo-title" name="todo-title" maxlength="25">
-        <label for="todo-description">Description:</label>
-        <textarea class="input" type="text" id="todo-description" name="todo-description" cols="30" rows="4"></textarea>
-        <label for="due-date">Due Date:</label>
-        <input type="date" class="input" id="due-date" name="due-date">
-        <label for="priority">Priority:</label>
-        <select name="priority" class="input" id="priority">
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-        </select>
-        <label for="project">Project:</label>
-        <select name="project" class="input" id="project">
-            <option value="main-list" selected>Main List</option>
-        </select>
-        <div class="form-buttons">
-            <button type="submit">Add it!</button>
-            <div class="error-mess hidden">PLEASE ADD A TITLE</div>
-        </div>`;
-        
-        openModal(todoForm);
-
-        //get current projects for the dropdown
-        const project = document.querySelector('#project');
-        projectList.forEach(({projectId, pTitle}) => {
-            const newOption = document.createElement('option');
-            newOption.value = projectId;
-            newOption.textContent = capitalize(pTitle);
-            project.appendChild(newOption);
-        })
-
-        todoForm.addEventListener('submit', createTodo);
-}
-
-//Create the shape and contents of a project Idem
+//Create the shape and contents of a project 
 function ProjectItem(_title, _todos) {
 
     const todos = _todos || [];
@@ -194,38 +228,7 @@ function ProjectItem(_title, _todos) {
         };
 } 
 
-//On the submit button of form, this creates a new project
-const createProject = (event) => {
-    event.preventDefault();
-    const pTitle = document.querySelector('#project-title');
-  
-    if (pTitle.value === "") {
-        document.getElementById('project-title').classList.add('error');
-        document.querySelector('.error-mess').classList.remove('hidden');
-        return
-    }
-
-    const newProject = new ProjectItem(pTitle.value);
-
-    closeModal();
-    return projectList.push(newProject);
-}
-
-//open a modal with a form for a new Project 
-const createProjectForm = () => {
-    const projectForm = document.createElement('form');
-    projectForm.innerHTML = `
-    <label for="project-title">Title:</label>
-    <input type="text" class="input" id="project-title" name="project-title" maxlength="25">
-    <div class="form-buttons">
-        <button type="submit">Add it!</button>
-        <div class="error-mess hidden">PLEASE ADD A TITLE</div>
-    </div>`;
-    
-    openModal(projectForm);
-    projectForm.addEventListener('submit', createProject);
-}
-
+//*** LISTENER FUNCTIONS ***
 //Listen for expand button and render modal with the details of that todo item or project
 const createExpandListener = (target, details) => {
     target.addEventListener('click', (event) => {
@@ -254,6 +257,14 @@ const createCompleteListener = (target, parent) => {
     })
 }
 
+//Listen for edit button and re-open form and populate it with current info
+const createEditListener = (target) => {
+    target.addEventListener('click', (event) => {
+        event.preventDefault();
+    }) 
+}
+
+//*** HELPER FUNCTIONS***
 //Capitalize the first letter of each word
 function capitalize(string) {
     return string.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');

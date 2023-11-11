@@ -95,7 +95,7 @@ main {
     margin-bottom: 0;
 }
 
-.expand, .delete {
+.expand, .delete, .edit {
     padding: 2px;
 }
 
