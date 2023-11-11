@@ -123,7 +123,7 @@ function TodoItem(_title, _description, _date, _priority, _projectTitle, _projec
     const deleteTarget = todoElement.querySelector('.delete');
     createDeleteListener(deleteTarget, listItem, todoElement);
     const editTarget = todoElement.querySelector('.edit');
-    createEditListener(editTarget, { title, description, date, priority, projectTitle });
+    createEditListener(editTarget, { title, description, date, priority, projectId });
     const completeTarget = todoElement.querySelector('.complete');
     createCompleteListener(completeTarget, todoElement);
 
@@ -140,7 +140,7 @@ function TodoItem(_title, _description, _date, _priority, _projectTitle, _projec
 
 //*** EDIT FUNTIONS ***
 //open a modal with a form that is populated with a todo's info
-const openEditForm = (title, description, date, priority, projectTitle) => {
+const openEditForm = (title, description, date, priority, projectId) => {
     
     createTodoForm()
 
@@ -155,7 +155,7 @@ const openEditForm = (title, description, date, priority, projectTitle) => {
     descriptionInput.value = description;
     dateInput.value = date;
     priorityInput.value = priority;
-    projectInput.value = projectTitle;
+    projectInput.value = projectId;
         
 }
 
@@ -288,9 +288,9 @@ const createEditListener = (button, todoItem) => {
         const description = todoItem.description; 
         const date = todoItem.date;
         const priority = todoItem.priority;
-        const projectTitle = todoItem.projectTitle;
+        const projectId = todoItem.projectId;
 
-        openEditForm(title, description, date, priority, projectTitle);
+        openEditForm(title, description, date, priority, projectId);
     }) 
 }
 
