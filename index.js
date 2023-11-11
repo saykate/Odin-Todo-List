@@ -39,7 +39,7 @@ const createTodoForm = () => {
         </select>
         <label for="project">Project:</label>
         <select name="project" class="input" id="project">
-            <option value="main-list" selected>Main List</option>
+            <option value="1" selected>Main List</option>
         </select>
         <div class="form-buttons">
             <button type="submit">Add it!</button>
@@ -108,13 +108,13 @@ function TodoItem(_title, _description, _date, _priority, _projectTitle, _projec
                 <button class="delete"><img src="./icons/trash-can-outline.svg" alt=""></button>
             </div>`
         const todoDetails = document.createElement('div');
-        todoDetails.classList.add('hidden');
+        todoDetails.classList.add('hidden', 'details');
         todoDetails.innerHTML = `
             <h3 class="ttl">Title: ${capitalize(title)}</h3>
-            <p>Description: ${capitalizeFirstWord(description)}</p>
-            <p>Due Date: ${date}</p>
-            <p>Priority: <span class="priority-flag ${priority}">${priority}</span></p>
-            <p>Project: ${projectTitle}</p>
+            <p class="description">Description: ${capitalizeFirstWord(description)}</p>
+            <p class="due-date">Due Date: ${date}</p>
+            <p class="priority">Priority: <span class="priority-flag ${priority}">${priority}</span></p>
+            <p class="project">Project: ${projectTitle}</p>
             <button class="close-button">Close</button>`;
 
     listItem.appendChild(todoElement);
@@ -142,7 +142,43 @@ function TodoItem(_title, _description, _date, _priority, _projectTitle, _projec
 //open a modal with a form that is populated with a todo's info
 const openEditForm = (title, description, date, priority, projectId) => {
     
-    createTodoForm()
+    const editForm = document.createElement('form');
+    editForm.innerHTML = `
+    <label for="todo-title">Title:</label>
+        <input type="text" class="input" id="todo-title" name="todo-title" maxlength="25">
+        <label for="todo-description">Description:</label>
+        <textarea class="input" type="text" id="todo-description" name="todo-description" cols="30" rows="4"></textarea>
+        <label for="due-date">Due Date:</label>
+        <input type="date" class="input" id="due-date" name="due-date">
+        <label for="priority">Priority:</label>
+        <select name="priority" class="input" id="priority">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+        <label for="project">Project:</label>
+        <select name="project" class="input" id="project">
+            <option value="1" selected>Main List</option>
+        </select>
+        <div class="form-buttons">
+            <button type="submit">Update</button>
+            <div class="error-mess hidden">PLEASE ADD A TITLE</div>
+        </div>`;
+        
+        openModal(editForm);
+
+        const todoElement = document.querySelector('.todo-item');
+        const details = document.querySelector('.details');
+        console.log(details); //comes back null - no idea how to remedy
+
+        //get current projects for the dropdown
+        const project = document.querySelector('#project');
+        projectList.forEach(({projectId, pTitle}) => {
+            const newOption = document.createElement('option');
+            newOption.value = projectId;
+            newOption.textContent = capitalize(pTitle);
+            project.appendChild(newOption);
+        })
 
     const titleInput = document.getElementById('todo-title');
     const descriptionInput = document.getElementById('todo-description');
@@ -156,8 +192,25 @@ const openEditForm = (title, description, date, priority, projectId) => {
     dateInput.value = date;
     priorityInput.value = priority;
     projectInput.value = projectId;
-        
+
+    editForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        todoElement.querySelector('.display-title').textContent = capitalize(titleInput.value);
+        // details.querySelector('.ttl').textContent = capitalize(titleInput.value);
+        // details.querySelector('.description').textContent = capitalizeFirstWord(descriptionInput.value);
+        // details.querySelector('.due-date').value = dateInput.value;
+        // details.querySelector('.priority').value = priorityInput.value;
+        // details.querySelector('.project').value = projectInput.value;
+        closeModal()
+    });
+
 }
+
+// const editTodo = (event) => {
+//     event.preventDefault();
+//     console.log('how the f do I change the existing todo????')
+//     closeModal()
+// }
 
 //*** PROJECT FUNCTIONS ***
 //open a modal with a form for a new Project 
