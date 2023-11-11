@@ -259,10 +259,10 @@ const createCompleteListener = (target, parent) => {
 }
 
 //Listen for edit button and re-open form and populate it with current info
-const createEditListener = (target) => {
-    target.addEventListener('click', (event) => {
+const createEditListener = (button) => {
+    button.addEventListener('click', (event) => {
         event.preventDefault();
-        console.log('what is even happening?')
+        console.log(button)
     }) 
 }
 
