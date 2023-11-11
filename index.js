@@ -123,7 +123,7 @@ function TodoItem(_title, _description, _date, _priority, _projectTitle, _projec
     const deleteTarget = todoElement.querySelector('.delete');
     createDeleteListener(deleteTarget, listItem, todoElement);
     const editTarget = todoElement.querySelector('.edit');
-    createEditListener(editTarget);
+    createEditListener(editTarget, { title, description, date, priority, projectTitle });
     const completeTarget = todoElement.querySelector('.complete');
     createCompleteListener(completeTarget, todoElement);
 
@@ -136,6 +136,27 @@ function TodoItem(_title, _description, _date, _priority, _projectTitle, _projec
 }
     init();
     return{ title };
+}
+
+//*** EDIT FUNTIONS ***
+//open a modal with a form that is populated with a todo's info
+const openEditForm = (title, description, date, priority, projectTitle) => {
+    
+    createTodoForm()
+
+    const titleInput = document.getElementById('todo-title');
+    const descriptionInput = document.getElementById('todo-description');
+    const dateInput = document.getElementById('due-date');
+    const priorityInput = document.getElementById('priority');
+    const projectInput = document.getElementById('project');
+
+    // Populate the form fields with the todo's info
+    titleInput.value = title;
+    descriptionInput.value = description;
+    dateInput.value = date;
+    priorityInput.value = priority;
+    projectInput.value = projectTitle;
+        
 }
 
 //*** PROJECT FUNCTIONS ***
@@ -259,10 +280,17 @@ const createCompleteListener = (target, parent) => {
 }
 
 //Listen for edit button and re-open form and populate it with current info
-const createEditListener = (button) => {
+const createEditListener = (button, todoItem) => {
     button.addEventListener('click', (event) => {
         event.preventDefault();
-        console.log(button)
+        //access todoItem info
+        const title = todoItem.title;
+        const description = todoItem.description; 
+        const date = todoItem.date;
+        const priority = todoItem.priority;
+        const projectTitle = todoItem.projectTitle;
+
+        openEditForm(title, description, date, priority, projectTitle);
     }) 
 }
 
